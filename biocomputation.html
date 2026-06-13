@@ -47,17 +47,39 @@
 
   <div class="card">
     <div class="card-label">Overview</div>
-    <p>Implemented a program that searches for Hamiltonian paths in graphs by simulating the biological process of constructing and destroying DNA chains. The approach draws from Adleman's DNA computing model, where the creation and filtering of molecular strands parallels exhaustive path search in graphs.</p>
+    <p>
+      In 1994, Leonard Adleman demonstrated that biological molecules could be used to solve
+      computational problems, specifically the <strong style="color:var(--text)">Hamiltonian Path Problem (HPP)</strong> —
+      the challenge of finding a path through a directed graph that visits every vertex exactly once.
+      His key insight was that DNA hybridisation naturally explores all possible paths in parallel,
+      something conventional computers struggle to do efficiently.
+    </p>
+    <p style="margin-top:12px;">
+      This project implements a <strong style="color:var(--text)">discrete stochastic simulation</strong> of that experiment in Python.
+      Each edge of the input graph is represented as an individual path fragment, randomly distributed
+      in a 3D unit cube. The simulation then evolves through three types of events:
+      <strong style="color:var(--text)">concatenation</strong> (two compatible path fragments merge into one),
+      <strong style="color:var(--text)">displacement</strong> (fragments move randomly within the cube, with shorter
+      paths moving further), and <strong style="color:var(--text)">cleavage</strong> (paths that have grown too long
+      are broken into shorter fragments). This mirrors the biochemical steps of hybridisation, PCR
+      selection, and gel electrophoresis from the original experiment.
+    </p>
+    <p style="margin-top:12px;">
+      After the simulation runs for a set time limit, a filtering stage eliminates any paths that
+      don't start and end at the required vertices, don't have the right length, or skip any vertex.
+      Whatever survives is a valid Hamiltonian path. The program was validated on two graphs,
+      including the original 7-node graph used by Adleman himself.
+    </p>
+    <p style="margin-top:12px;">
+      The project was structured following a modular, layered programming methodology — first
+      defining the core data types (graphs, paths, individuals, events), then building the simulation
+      logic on top of them.
+    </p>
   </div>
 
   <div class="card">
     <div class="card-label">Tech Stack</div>
-    <p>Python · Graph Theory · Biocomputation Concepts</p>
-  </div>
-
-  <div class="coming-soon">
-    <span>🔧</span>
-    <p>Detailed write-up and source code coming soon.</p>
+    <p>Python · Discrete Stochastic Simulation · Graph Theory · Biocomputation (Adleman's Model)</p>
   </div>
 </div>
 

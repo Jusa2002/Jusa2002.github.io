@@ -47,17 +47,44 @@
 
   <div class="card">
     <div class="card-label">Overview</div>
-    <p>Built a Kotlin API from scratch — no external libraries — that uses reflection and custom annotations to serialise Kotlin objects into JSON format. The goal was to understand how serialisation frameworks work under the hood by implementing one manually.</p>
+    <p>
+      JSON is the standard format for data exchange on the web. It's a tree-shaped structure, which
+      works well for most cases — but becomes problematic when the data you want to serialise is a
+      <strong style="color:var(--text)">graph</strong>, where objects reference each other. A naive serialisation
+      would either duplicate shared objects or fall into infinite recursion. The standard workaround
+      is to assign each object a UUID and replace back-references with a special
+      <code style="color:var(--accent2)">{"$ref": "...uuid..."}</code> object. But managing those UUIDs manually
+      is tedious and error-prone.
+    </p>
+    <p style="margin-top:12px;">
+      <strong style="color:var(--text)">ProJson</strong> is a Kotlin library built to solve exactly that —
+      making UUID-based reference management fully transparent to the caller. The library was built
+      from scratch without any external dependencies, using <strong style="color:var(--text)">Kotlin reflection</strong>
+      to inspect objects at runtime and convert them into a structured in-memory JSON model
+      (<code style="color:var(--accent2)">JsonObject</code>, <code style="color:var(--accent2)">JsonArray</code>,
+      <code style="color:var(--accent2)">JsonPrimitive</code>, <code style="color:var(--accent2)">JsonReference</code>).
+    </p>
+    <p style="margin-top:12px;">
+      The library was developed in three phases. The first covered standard JSON serialisation —
+      converting any Kotlin object or collection into JSON, with support for in-memory manipulation
+      (add, modify, delete properties). The second phase introduced
+      <strong style="color:var(--text)">annotation-driven customisation</strong>: a
+      <code style="color:var(--accent2)">@Reference</code> annotation to mark properties that should use
+      UUID references instead of inline objects; <code style="color:var(--accent2)">@JsonProperty</code> to rename
+      fields in the output; <code style="color:var(--accent2)">@JsonIgnore</code> to exclude fields entirely; and
+      a plugin mechanism via <code style="color:var(--accent2)">@JsonString</code> for custom string serialisation
+      of specific types. The third phase focused on documentation, publishing the library to GitHub
+      with a JAR release, and writing a full usage tutorial in the README.
+    </p>
+    <p style="margin-top:12px;">
+      The project was part of the Advanced Programming course at ISCTE's MSc in Computer Science,
+      and was a strong exercise in API design, reflection, and building developer-facing abstractions.
+    </p>
   </div>
 
   <div class="card">
     <div class="card-label">Tech Stack</div>
-    <p>Kotlin · Reflection · Custom Annotations · JVM</p>
-  </div>
-
-  <div class="coming-soon">
-    <span>🔧</span>
-    <p>Detailed write-up and source code coming soon.</p>
+    <p>Kotlin · JVM Reflection · Custom Annotations · API Design · No External Libraries</p>
   </div>
 </div>
 

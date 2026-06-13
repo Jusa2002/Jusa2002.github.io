@@ -47,17 +47,38 @@
 
   <div class="card">
     <div class="card-label">Overview</div>
-    <p>Built a classifier in Java that learns from a labelled dataset and then predicts the class of new, unseen data vectors. Implemented without any ML frameworks, focusing on understanding the underlying mechanics of training and inference from first principles.</p>
+    <p>
+      A classifier is a function that maps an input — a vector of measurements — to a predicted
+      class. The challenge is learning that function from data. A naive approach would be to estimate
+      the full joint probability distribution of all variables, but this runs into a fundamental
+      problem: the domain grows exponentially with the number of features, requiring an impractically
+      large dataset to avoid overfitting.
+    </p>
+    <p style="margin-top:12px;">
+      This project addresses that by using a <strong style="color:var(--text)">Markov Random Field (MRF)</strong> —
+      a probabilistic graphical model that encodes conditional independence assumptions between
+      variables, drastically reducing the number of parameters needed. The classifier was built
+      around the <strong style="color:var(--text)">Chow-Liu algorithm</strong>, which learns the optimal
+      tree-structured MRF from data by finding the maximum spanning tree over pairwise mutual
+      information scores. Classification then reduces to finding the class that maximises the
+      joint probability under the learned model — a maximum likelihood estimate.
+    </p>
+    <p style="margin-top:12px;">
+      The implementation was done entirely in Java from scratch, without any machine learning
+      libraries. It was trained and tested on biomedical datasets from the
+      <strong style="color:var(--text)">UCI Machine Learning Repository</strong>, including a cancer dataset
+      where the goal was to classify tumours as benign or malignant based on ten clinical measurements.
+    </p>
+    <p style="margin-top:12px;">
+      This was my first substantial Java project, and it gave me a solid grounding in both
+      probabilistic reasoning and practical software design — working with matrices, graph algorithms,
+      and data pipelines all within the same codebase.
+    </p>
   </div>
 
   <div class="card">
     <div class="card-label">Tech Stack</div>
-    <p>Java · Object-Oriented Programming · Data Structures</p>
-  </div>
-
-  <div class="coming-soon">
-    <span>🔧</span>
-    <p>Detailed write-up and source code coming soon.</p>
+    <p>Java · Markov Random Fields · Chow-Liu Algorithm · Probabilistic Graphical Models · UCI Datasets</p>
   </div>
 </div>
 

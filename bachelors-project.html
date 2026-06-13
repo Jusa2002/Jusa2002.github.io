@@ -47,17 +47,36 @@
 
   <div class="card">
     <div class="card-label">Overview</div>
-    <p>Mathematical study analysing how seasonal variation affects the classic Lotka-Volterra predator-prey model. The project extends the standard ODE system by introducing time-dependent (periodic) parameters to model seasonal changes in birth rates, death rates, or resource availability, and studies the resulting long-term population dynamics.</p>
+    <p>
+      The <strong style="color:var(--text)">Lotka-Volterra equations</strong> are one of the most well-known
+      mathematical models in ecology. They describe the cyclical dynamics between a prey population
+      and a predator population through a pair of coupled differential equations: prey grow when
+      predators are scarce, predators thrive when prey are abundant, and the two populations
+      oscillate in a feedback loop. Despite its simplicity, this model serves as a foundation for
+      more complex ecological modelling.
+    </p>
+    <p style="margin-top:12px;">
+      The focus of this project was to extend the standard Lotka-Volterra system into a
+      <strong style="color:var(--text)">non-autonomous model</strong> — one where the parameters are no longer
+      constant but vary periodically with time, simulating the effect of seasons. In practice, prey
+      reproduction rates peak in spring and summer, while predators may reduce their hunting activity
+      in winter. By making parameters like birth rate and predation rate periodic functions of time
+      (with period T = 1 year), the model becomes significantly more complex and realistic.
+    </p>
+    <p style="margin-top:12px;">
+      The analysis focused on the <strong style="color:var(--text)">qualitative behaviour</strong> of solutions:
+      under what conditions do populations converge to a limit cycle? How sensitive are the dynamics
+      to initial conditions? To answer these questions, the project made use of
+      <strong style="color:var(--text)">Poincaré maps</strong> — a classical tool from dynamical systems theory
+      that reduces the study of periodic orbits to finding fixed points of a discrete map. Numerical
+      simulations were carried out in MATLAB using <code style="color:var(--accent2)">ode45</code>, and the
+      report also proposed and analysed an original variant of the seasonal model.
+    </p>
   </div>
 
   <div class="card">
     <div class="card-label">Tech Stack</div>
-    <p>MATLAB · Differential Equations · Mathematical Modelling · LaTeX (report)</p>
-  </div>
-
-  <div class="coming-soon">
-    <span>🔧</span>
-    <p>Detailed write-up and report coming soon.</p>
+    <p>MATLAB · Ordinary Differential Equations · Dynamical Systems · Poincaré Maps · LaTeX</p>
   </div>
 </div>
 
