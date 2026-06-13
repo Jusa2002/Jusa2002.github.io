@@ -2,120 +2,454 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>José Ferreira | Portfolio</title>
+  <title>José Pedro Ferreira | Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0b1120;
+      --surface:  #131e33;
+      --surface2: #1a2944;
+      --accent:   #38bdf8;
+      --accent2:  #818cf8;
+      --text:     #e2e8f0;
+      --muted:    #94a3b8;
+      --border:   #1e3a5f;
     }
 
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; }
+
+    /* NAV */
     header {
-      background: #1e293b;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11,17,32,.92); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-weight: 700; font-size: 1rem; color: var(--text); letter-spacing: .5px; }
+    nav a { margin-left: 28px; color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
+    nav a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero { padding: 110px 40px 80px; max-width: 900px; margin: auto; }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(56,189,248,.12); color: var(--accent);
+      border: 1px solid rgba(56,189,248,.3); border-radius: 99px;
+      padding: 4px 14px; font-size: .8rem; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.15; margin-bottom: 18px; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { font-size: 1.1rem; color: var(--muted); max-width: 580px; margin-bottom: 32px; }
+    .hero-links a {
+      display: inline-block; margin-right: 14px;
+      padding: 10px 22px; border-radius: 8px;
+      font-size: .9rem; font-weight: 600; text-decoration: none; transition: all .2s;
+    }
+    .btn-primary { background: var(--accent); color: #0b1120; }
+    .btn-primary:hover { background: #7dd3fc; }
+    .hero-pills { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill { background: var(--surface); border: 1px solid var(--border); border-radius: 99px; padding: 5px 14px; font-size: .8rem; color: var(--muted); }
+
+    /* SECTIONS */
+    section { padding: 70px 40px; }
+    .container { max-width: 900px; margin: auto; }
+    .section-label { font-size: .78rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 36px; }
+
+    /* ABOUT */
+    #about { background: var(--surface); }
+    .about-text p { color: var(--muted); margin-bottom: 14px; font-size: .97rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    /* EXPERIENCE / EDUCATION timeline */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 6px; bottom: 6px;
+      width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent2)); border-radius: 2px;
+    }
+    .tl-item { position: relative; margin-bottom: 36px; }
+    .tl-dot {
+      position: absolute; left: -34px; top: 4px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+    }
+    .tl-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 4px; }
+    .tl-title { font-size: 1.05rem; font-weight: 700; }
+    .tl-company { color: var(--accent); font-size: .9rem; }
+    .tl-date { color: var(--muted); font-size: .82rem; white-space: nowrap; }
+    .tl-body { margin-top: 10px; color: var(--muted); font-size: .93rem; }
+    .tl-body ul { padding-left: 18px; margin-top: 6px; }
+    .tl-tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      background: rgba(56,189,248,.1); border: 1px solid rgba(56,189,248,.25);
+      color: var(--accent); border-radius: 4px; padding: 2px 10px; font-size: .75rem;
     }
 
-    nav a {
-      margin-left: 20px;
-      color: #38bdf8;
-      text-decoration: none;
-      font-weight: bold;
-    }
+    /* SKILLS */
+    #skills { background: var(--surface); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .skill-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .skill-card h3 { font-size: .95rem; margin-bottom: 14px; }
+    .skill-row { margin-bottom: 10px; }
+    .skill-row-top { display: flex; justify-content: space-between; font-size: .82rem; margin-bottom: 4px; }
+    .skill-row-top span:last-child { color: var(--muted); }
+    .bar { background: var(--border); border-radius: 99px; height: 5px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
 
-    nav a:hover {
-      color: #0ea5e9;
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 22px;
+      text-decoration: none; display: block;
+      transition: border-color .2s, transform .2s;
     }
-
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
+    .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .project-lang {
+      font-size: .75rem; color: var(--accent2);
+      border: 1px solid rgba(129,140,248,.3); border-radius: 4px;
+      padding: 2px 8px; display: inline-block; margin-bottom: 10px;
     }
+    .project-card h3 { font-size: 1rem; margin-bottom: 8px; color: var(--text); }
+    .project-card p { font-size: .88rem; color: var(--muted); }
+    .project-arrow { margin-top: 14px; font-size: .8rem; color: var(--accent); }
 
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
+    /* EDUCATION */
+    #education { background: var(--surface); }
 
-    .hero p {
-      font-size: 1.2rem;
-      color: #94a3b8;
-    }
+    /* LANGUAGES */
+    .lang-grid { display: flex; gap: 20px; flex-wrap: wrap; }
+    .lang-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 28px; text-align: center; min-width: 140px; }
+    .lang-card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .dots { display: flex; gap: 5px; justify-content: center; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
+    .dot.filled { background: var(--accent); }
+    .lang-level { font-size: .78rem; color: var(--muted); margin-top: 6px; }
 
-    .section {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
+    /* FOOTER */
+    footer { text-align: center; padding: 32px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--border); }
+    footer a { color: var(--accent); text-decoration: none; }
 
-    .card {
-      background: #1e293b;
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 10px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      color: #64748b;
+    @media (max-width: 640px) {
+      header { padding: 12px 20px; }
+      .hero { padding: 70px 20px 50px; }
+      section { padding: 50px 20px; }
+      nav a { margin-left: 14px; }
     }
   </style>
 </head>
-
 <body>
 
 <header>
-  <div><strong>José Ferreira</strong></div>
+  <div class="logo">JPF</div>
   <nav>
-    <a href="index.html">Home</a>
-    <a href="projects.html">Projects</a>
-    <a href="cv.html">CV</a>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
   </nav>
 </header>
 
-<section class="hero">
-  <h1>Software Engineer</h1>
-  <p>Optimization • Algorithms • Railway Systems</p>
-</section>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Open to opportunities</div>
+  <h1>José Pedro<br><span>Ferreira</span></h1>
+  <p>Software Validation Engineer & MSc Computer Science student. I build tools, test safety-critical systems, and enjoy turning complex problems into clean solutions.</p>
+  <div class="hero-links">
+    <a href="https://www.linkedin.com/in/jos%C3%A9-pedro-ferreira-172a07285/" target="_blank" class="btn-primary">Connect on LinkedIn</a>
+  </div>
+  <div class="hero-pills">
+    <span class="pill">🇵🇹 Lisboa, Portugal</span>
+    <span class="pill">🚄 Railway Safety Systems</span>
+    <span class="pill">☕ Java · Python · SQL</span>
+    <span class="pill">📐 Applied Mathematics</span>
+  </div>
+</div>
 
-<section class="section">
-  <h2>About Me</h2>
-  <div class="card">
-    <p>
-      I'm a Software Validation Engineer with a background in Applied Mathematics and Computer Science.
-      I enjoy solving complex optimization problems and building efficient systems.
-    </p>
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">Who I am</div>
+    <h2>About Me</h2>
+    <div class="about-text">
+      <p>
+        I'm José Pedro, 23 years old, originally from Barcelos, Braga. I've always been a naturally
+        curious person with a strong pull towards science and logic — the kind of person who needs to
+        understand <em>why</em> something works before being satisfied with the answer.
+      </p>
+      <p>
+        That curiosity led me to fall in love with Mathematics in high school, and I decided to pursue
+        a Bachelor's degree in Applied Mathematics and Computation at
+        <strong style="color:var(--text)">Instituto Superior Técnico</strong>, one of the top engineering
+        universities in Portugal. The programme was mathematically intensive and gave me a solid foundation
+        in algorithms, data structures, and computational thinking. More than the technical knowledge,
+        it sharpened my ability to reason carefully about problems — which I consider my strongest asset
+        as an engineer.
+      </p>
+      <p>
+        My best characteristic is probably this: I have a good intuition for spotting where a process
+        could be more efficient, and for anticipating why something might fail before it does. Whether
+        it's a test suite, a codebase, or a workflow, I tend to look for the redundancy or the edge case
+        others overlook.
+      </p>
+      <p>
+        After graduating, I joined <strong style="color:var(--text)">Critical Software</strong>, where I work as a
+        Software Tester embedded in the Hitachi Rail team on projects for Infraestruturas de Portugal.
+        I test safety-critical interlocking software, handle ETCS parameter validation, and built an
+        internal Java tool to automate parameter cross-checking and test database population — a project
+        that significantly improved our team's validation throughput.
+      </p>
+      <p>
+        To deepen my grounding in computer science, I'm currently pursuing a
+        <strong style="color:var(--text)">Master's degree in Computer Science at ISCTE</strong>,
+        which I attend in the evenings alongside my full-time role. I'm interested in software
+        engineering, backend development, and the kinds of optimisation problems that sit at the
+        intersection of mathematics and code.
+      </p>
+    </div>
   </div>
 </section>
 
-<section class="section">
-  <h2>Highlights</h2>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label">Career</div>
+    <h2>Professional Experience</h2>
+    <div class="timeline">
 
-  <div class="card">
-    <h3>🚄 Railway Systems</h3>
-    <p>Testing and validating interlocking and ETCS systems.</p>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-header">
+          <div>
+            <div class="tl-title">Software Tester</div>
+            <div class="tl-company">Critical Software — Hitachi Rail / Infraestruturas de Portugal</div>
+          </div>
+          <div class="tl-date">Oct 2023 – Present · Lisboa</div>
+        </div>
+        <div class="tl-body">
+          <ul>
+            <li>Manual and automated testing of interlocking software based on Thales PIPC G3.</li>
+            <li>ETCS parameter validation for national railway infrastructure.</li>
+            <li>Developed a Java tool to cross-check software parameters against IP rules and automatically populate test databases, significantly improving validation efficiency.</li>
+          </ul>
+        </div>
+        <div class="tl-tags">
+          <span class="tag">Java</span>
+          <span class="tag">ETCS</span>
+          <span class="tag">Thales PIPC G3</span>
+          <span class="tag">Test Automation</span>
+          <span class="tag">Railway Safety</span>
+          <span class="tag">Jira</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--accent2);"></div>
+        <div class="tl-header">
+          <div>
+            <div class="tl-title">Private Maths Tutor</div>
+            <div class="tl-company">Self-employed (Part-Time)</div>
+          </div>
+          <div class="tl-date">Sep 2022 – Jun 2023 · Lisboa</div>
+        </div>
+        <div class="tl-body">
+          Provided online and in-person maths tutoring to middle and high school students, covering algebra, calculus, and problem-solving.
+        </div>
+      </div>
+
+    </div>
   </div>
+</section>
 
-  <div class="card">
-    <h3>⚙️ Optimization</h3>
-    <p>Experience with genetic algorithms and traffic assignment models.</p>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">Technical</div>
+    <h2>Skills</h2>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <h3>Programming Languages</h3>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Java</span><span>Advanced</span></div>
+          <div class="bar"><div class="bar-fill" style="width:88%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Python</span><span>Medium</span></div>
+          <div class="bar"><div class="bar-fill" style="width:55%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>SQL</span><span>Medium</span></div>
+          <div class="bar"><div class="bar-fill" style="width:55%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>MATLAB / Wolfram</span><span>Medium</span></div>
+          <div class="bar"><div class="bar-fill" style="width:50%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Kotlin</span><span>Basic</span></div>
+          <div class="bar"><div class="bar-fill" style="width:30%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <h3>Frameworks & Learning</h3>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Core Java (OOP)</span><span>Advanced</span></div>
+          <div class="bar"><div class="bar-fill" style="width:88%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Spring Boot</span><span>Learning</span></div>
+          <div class="bar"><div class="bar-fill" style="width:22%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <h3>Tools & Platforms</h3>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Jira</span><span>Daily use</span></div>
+          <div class="bar"><div class="bar-fill" style="width:72%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>LaTeX</span><span>Experienced</span></div>
+          <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>Excel</span><span>Experienced</span></div>
+          <div class="bar"><div class="bar-fill" style="width:65%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-top"><span>vSphere</span><span>Familiar</span></div>
+          <div class="bar"><div class="bar-fill" style="width:35%"></div></div>
+        </div>
+      </div>
+
+    </div>
   </div>
+</section>
 
-  <div class="card">
-    <h3>💻 Development</h3>
-    <p>Java, Python, C++, SQL, and automation tools.</p>
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">University Work</div>
+    <h2>Projects</h2>
+    <div class="projects-grid">
+
+      <a class="project-card" href="json-serializer.html">
+        <span class="project-lang">Kotlin</span>
+        <h3>JSON Serializer API</h3>
+        <p>Dependency-free API that converts annotated Kotlin objects into JSON format.</p>
+        <div class="project-arrow">View project →</div>
+      </a>
+
+      <a class="project-card" href="biocomputation.html">
+        <span class="project-lang">Python</span>
+        <h3>Biocomputation — Hamiltonian Paths</h3>
+        <p>Simulates DNA chain construction/destruction to search for Hamiltonian paths in graphs.</p>
+        <div class="project-arrow">View project →</div>
+      </a>
+
+      <a class="project-card" href="ml-classifier.html">
+        <span class="project-lang">Java</span>
+        <h3>Machine Learning Classifier</h3>
+        <p>Classifier that learns from a dataset and predicts the class of new input vectors.</p>
+        <div class="project-arrow">View project →</div>
+      </a>
+
+      <a class="project-card" href="bachelors-project.html">
+        <span class="project-lang">MATLAB / LaTeX</span>
+        <h3>Bachelor's Final Project</h3>
+        <p>Study of the "Impact of Seasonality on Predator-Prey Dynamics".</p>
+        <div class="project-arrow">View project →</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-label">Academic</div>
+    <h2>Education</h2>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-header">
+          <div>
+            <div class="tl-title">MSc Computer Science <span style="font-weight:400;color:var(--accent);font-size:.85rem;">(ongoing)</span></div>
+            <div class="tl-company">Instituto Universitário de Lisboa (ISCTE)</div>
+          </div>
+          <div class="tl-date">Sep 2025 – Present · Lisboa</div>
+        </div>
+        <div class="tl-body">Evening programme, attended alongside full-time employment.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-header">
+          <div>
+            <div class="tl-title">BSc Applied Mathematics and Computation</div>
+            <div class="tl-company">Instituto Superior Técnico, Universidade de Lisboa</div>
+          </div>
+          <div class="tl-date">2020 – 2023 · Lisboa</div>
+        </div>
+        <div class="tl-body">Mathematically intensive programme covering algorithms, data structures, modelling, and computational methods.</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot" style="background:var(--accent2);"></div>
+        <div class="tl-header">
+          <div>
+            <div class="tl-title">High School — Sciences & Technology</div>
+            <div class="tl-company">Escola Secundária de Barcelos</div>
+          </div>
+          <div class="tl-date">2017 – 2020 · Barcelos</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:48px;">
+      <div class="section-label" style="margin-bottom:16px;">Languages</div>
+      <div class="lang-grid">
+        <div class="lang-card">
+          <h3>Portuguese</h3>
+          <div class="dots">
+            <div class="dot filled"></div><div class="dot filled"></div>
+            <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div>
+          </div>
+          <div class="lang-level">Native</div>
+        </div>
+        <div class="lang-card">
+          <h3>English</h3>
+          <div class="dots">
+            <div class="dot filled"></div><div class="dot filled"></div>
+            <div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div>
+          </div>
+          <div class="lang-level">B2 — Cambridge Certificate</div>
+        </div>
+        <div class="lang-card">
+          <h3>Spanish</h3>
+          <div class="dots">
+            <div class="dot filled"></div><div class="dot filled"></div>
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          </div>
+          <div class="lang-level">Basic</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
-  © 2026 José Ferreira
+  <p>© 2026 José Pedro Ferreira · <a href="mailto:jpferreira.pfl@gmail.com">jpferreira.pfl@gmail.com</a> · Lisboa, Portugal</p>
 </footer>
 
 </body>
