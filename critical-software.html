@@ -6,9 +6,20 @@
   <title>Critical Software — Behind the Role | JPF</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --bg:#0b1120; --surface:#131e33; --surface2:#1a2944; --accent:#38bdf8; --accent2:#818cf8; --text:#e2e8f0; --muted:#94a3b8; --border:#1e3a5f; }
+    :root {
+      --bg:       #0b1120;
+      --surface:  #131e33;
+      --surface2: #1a2944;
+      --accent:   #38bdf8;
+      --accent2:  #818cf8;
+      --text:     #e2e8f0;
+      --muted:    #94a3b8;
+      --border:   #1e3a5f;
+      --gold:     #fbbf24;
+    }
     body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
 
+    /* NAV */
     header { position: sticky; top: 0; z-index: 100; background: rgba(11,17,32,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; justify-content: space-between; align-items: center; }
     .logo { font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; }
     nav a { margin-left: 28px; color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
@@ -19,31 +30,98 @@
     .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-size: .88rem; margin-bottom: 32px; }
     .back-link:hover { color: #7dd3fc; }
 
-    .role-badge { display: inline-block; background: rgba(56,189,248,.1); border: 1px solid rgba(56,189,248,.25); color: var(--accent); border-radius: 4px; padding: 4px 12px; font-size: .8rem; margin-bottom: 20px; }
-
+    /* HEADER BLOCK */
+    .role-badge { display: inline-block; background: rgba(56,189,248,.1); border: 1px solid rgba(56,189,248,.25); color: var(--accent); border-radius: 4px; padding: 4px 12px; font-size: .8rem; margin-bottom: 16px; }
     h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 6px; }
     .meta { color: var(--muted); font-size: .9rem; margin-bottom: 40px; }
 
-    .intro { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 36px; }
+    /* INTRO — visually separated with left accent bar + slightly different bg */
+    .intro {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 28px 28px 28px 24px;
+      margin-bottom: 48px;
+    }
+    .intro-label { font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
     .intro p { color: var(--muted); font-size: .97rem; }
     .intro p + p { margin-top: 12px; }
 
-    .phases { display: flex; flex-direction: column; gap: 20px; }
+    /* PHASES SECTION LABEL */
+    .phases-label { font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
 
-    .phase-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 26px; position: relative; overflow: hidden; }
-    .phase-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--accent), var(--accent2)); border-radius: 3px 0 0 3px; }
+    /* PHASE CARDS */
+    .phases { display: flex; flex-direction: column; gap: 16px; }
 
-    .phase-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; color: var(--text); }
-    .phase-card p { color: var(--muted); font-size: .95rem; }
+    .phase-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 24px 24px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .phase-card::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--border);
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* HIGHLIGHTED card — the Java tool */
+    .phase-card.highlight {
+      background: var(--surface2);
+      border-color: rgba(56,189,248,.35);
+    }
+    .phase-card.highlight::before {
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+    }
+
+    .phase-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .phase-title { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .phase-card.highlight .phase-title { color: var(--accent); font-size: 1.05rem; }
+
+    .phase-time {
+      font-size: .75rem;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 2px 10px;
+      white-space: nowrap;
+    }
+    .phase-card.highlight .phase-time {
+      color: var(--accent);
+      border-color: rgba(56,189,248,.3);
+      background: rgba(56,189,248,.06);
+    }
+
+    .phase-card p { color: var(--muted); font-size: .93rem; }
     .phase-card p + p { margin-top: 10px; }
 
-    .tags { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { background: rgba(56,189,248,.1); border: 1px solid rgba(56,189,248,.25); color: var(--accent); border-radius: 4px; padding: 2px 10px; font-size: .75rem; }
+    /* HIGHLIGHT badge */
+    .highlight-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.3);
+      color: var(--gold); border-radius: 4px;
+      padding: 2px 10px; font-size: .72rem; font-weight: 600;
+      margin-bottom: 12px;
+    }
 
-    footer { text-align: center; padding: 32px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--border); }
+    .tags { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { background: rgba(56,189,248,.07); border: 1px solid rgba(56,189,248,.2); color: var(--accent); border-radius: 4px; padding: 2px 10px; font-size: .75rem; }
+    .tag-neutral { background: rgba(148,163,184,.07); border: 1px solid rgba(148,163,184,.2); color: var(--muted); border-radius: 4px; padding: 2px 10px; font-size: .75rem; }
+
+    footer { text-align: center; padding: 32px; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--border); margin-top: 40px; }
     footer a { color: var(--accent); text-decoration: none; }
 
-    @media (max-width: 640px) { header { padding: 12px 20px; } .page { padding: 50px 20px 70px; } }
+    @media (max-width: 600px) {
+      header { padding: 12px 20px; }
+      nav a:first-child { display: none; }
+      .page { padding: 50px 18px 70px; }
+      .phase-header { flex-direction: column; gap: 6px; }
+    }
   </style>
 </head>
 <body>
@@ -65,6 +143,7 @@
 
   <!-- INTRO -->
   <div class="intro">
+    <div class="intro-label">Context</div>
     <p>
       This role doesn't follow a strict linear progression. While there are periods where certain
       tasks dominate, the reality is more fluid — depending on the team's needs at any given time,
@@ -83,73 +162,84 @@
   </div>
 
   <!-- PHASES -->
+  <div class="phases-label">What I do</div>
   <div class="phases">
 
     <div class="phase-card">
-      <div class="phase-title">Manual Testing</div>
+      <div class="phase-header">
+        <div class="phase-title">Manual Testing</div>
+        <span class="phase-time">Since Oct 2023 · Ongoing</span>
+      </div>
       <p>
-        The entry point into the project. Manual testing here means working with
-        <strong style="color:var(--text)">software control tables</strong> — large specification documents
-        that define exactly how the interlocking software should behave under every possible scenario.
-        For each test case, I verify that the software's actual output matches what the table dictates.
+        The entry point into the project — and a recurring responsibility throughout. Manual testing
+        here means working with <strong style="color:var(--text)">software control tables</strong>:
+        large specification documents that define exactly how the interlocking software should behave
+        under every possible scenario. For each test case, I verify that the software's actual output
+        matches what the table dictates.
       </p>
       <p>
-        This phase required getting deeply familiar with the railway domain before anything else —
-        understanding track layouts, signal logic, route locking, and the safety rules that govern
-        all of it. It remains a recurring responsibility throughout the role.
+        This phase required building deep domain familiarity before anything else — understanding
+        track layouts, signal logic, route locking, and the safety rules that govern all of it.
       </p>
       <div class="tags">
-        <span class="tag">Interlocking Software</span>
         <span class="tag">Control Tables</span>
         <span class="tag">Thales PIPC G3</span>
-        <span class="tag">Railway Safety</span>
+        <span class="tag-neutral">Railway Safety</span>
       </div>
     </div>
 
     <div class="phase-card">
-      <div class="phase-title">Automated Test Parametrization</div>
+      <div class="phase-header">
+        <div class="phase-title">Automated Test Parametrization</div>
+        <span class="phase-time">Since early 2024 · Recurring</span>
+      </div>
       <p>
         After building enough domain knowledge, I moved into supporting the automated test
         infrastructure. Automated tests are driven by databases that need to be parametrized —
-        filled with the right values to correctly represent each test scenario. This was
-        time-consuming and repetitive by nature, which planted the seed for the tooling work
-        that followed.
+        filled with the right values to correctly represent each test scenario. Repetitive and
+        time-consuming by nature, which planted the seed for the tooling work that followed.
       </p>
       <div class="tags">
         <span class="tag">Test Automation</span>
-        <span class="tag">Database Parametrization</span>
-        <span class="tag">Jira</span>
+        <span class="tag-neutral">Database Parametrization</span>
       </div>
     </div>
 
-    <div class="phase-card">
-      <div class="phase-title">Java Tool — Station as a Graph</div>
+    <!-- HIGHLIGHTED -->
+    <div class="phase-card highlight">
+      <div class="highlight-badge">⭐ Engineering highlight</div>
+      <div class="phase-header">
+        <div class="phase-title">Java Tool — Station as a Graph</div>
+        <span class="phase-time">2024</span>
+      </div>
       <p>
         While filling parametrization databases, I kept running into the same repetitive pattern.
         At some point it clicked: a train station is fundamentally a
-        <strong style="color:var(--text)">graph</strong>. Track elements are nodes, and routes are
-        paths through that graph with defined start conditions and stop conditions.
+        <strong style="color:var(--text)">graph</strong>. Track elements are nodes, routes are paths
+        through that graph with defined start and stop conditions.
       </p>
       <p>
         I built a Java tool that takes a <strong style="color:var(--text)">CSV file</strong> encoding
         the structure of a train station and uses it to automatically populate the relevant sections
         of the parametrization database. What previously required significant manual effort could now
-        be done with a small amount of structured input, consistently and without human error.
+        be done with a small amount of structured input — consistently and without human error.
       </p>
       <div class="tags">
-        <span class="tag">Java</span>
         <span class="tag">Graph Modelling</span>
         <span class="tag">CSV Parsing</span>
-        <span class="tag">Process Automation</span>
+        <span class="tag-neutral">Process Automation</span>
       </div>
     </div>
 
     <div class="phase-card">
-      <div class="phase-title">ETCS Validation — Radio Block Centre</div>
+      <div class="phase-header">
+        <div class="phase-title">ETCS Validation — Radio Block Centre</div>
+        <span class="phase-time">2024 · Recurring</span>
+      </div>
       <p>
         A separate stream of work involving the
-        <strong style="color:var(--text)">European Train Control System (ETCS)</strong>. Here the task
-        is to verify that the parametrization of the Radio Block Centre complies with the software's
+        <strong style="color:var(--text)">European Train Control System (ETCS)</strong>. The task is
+        to verify that the parametrization of the Radio Block Centre complies with the software's
         product rules — a more exhaustive set of checks than standard interlocking testing.
       </p>
       <p>
@@ -159,40 +249,42 @@
       <div class="tags">
         <span class="tag">ETCS</span>
         <span class="tag">Radio Block Centre</span>
-        <span class="tag">Compliance Validation</span>
-        <span class="tag">Java</span>
+        <span class="tag-neutral">Compliance Validation</span>
       </div>
     </div>
 
     <div class="phase-card">
-      <div class="phase-title">Concurrency Checker — XML State Machines</div>
+      <div class="phase-header">
+        <div class="phase-title">Concurrency Checker — XML State Machines</div>
+        <span class="phase-time">2025</span>
+      </div>
       <p>
         Certain behaviours in the interlocking software are defined through
-        <strong style="color:var(--text)">state machines</strong>, which are parametrized via XML files.
+        <strong style="color:var(--text)">state machines</strong>, parametrized via XML files.
         I developed a tool that parses those XML files and applies the necessary logic to verify
         concurrency conditions between states — catching configuration conflicts that would be
         difficult to spot manually.
       </p>
       <div class="tags">
-        <span class="tag">Java</span>
         <span class="tag">XML Parsing</span>
         <span class="tag">State Machines</span>
-        <span class="tag">Concurrency Analysis</span>
+        <span class="tag-neutral">Concurrency Analysis</span>
       </div>
     </div>
 
     <div class="phase-card">
-      <div class="phase-title">XML Diff Tool</div>
+      <div class="phase-header">
+        <div class="phase-title">XML Diff Tool</div>
+        <span class="phase-time">2025</span>
+      </div>
       <p>
-        Also developed a tool to parse and compare XML configuration files across versions,
-        identifying and reporting differences in a structured way. Useful whenever a new software
-        release changes the underlying configuration and the team needs to understand exactly what
-        changed and where.
+        A tool to parse and compare XML configuration files across versions, identifying and
+        reporting differences in a structured way. Useful whenever a new software release changes
+        the underlying configuration and the team needs to understand exactly what changed and where.
       </p>
       <div class="tags">
-        <span class="tag">Java</span>
         <span class="tag">XML Parsing</span>
-        <span class="tag">Version Diffing</span>
+        <span class="tag-neutral">Version Diffing</span>
       </div>
     </div>
 
